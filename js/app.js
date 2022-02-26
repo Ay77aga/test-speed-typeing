@@ -16,6 +16,8 @@ let menu = document.querySelector('.menu'),
 
 if (window.localStorage.height_score) {
   document.querySelector('.height_score span').textContent = window.localStorage.height_score;
+}else{
+    window.localStorage.height_score = score.textContent;
 }
 level.setAttribute('data-time', 4);
 menu.addEventListener('click', function() {
@@ -45,10 +47,7 @@ start_btn.onclick = function() {
 reset_btn.onclick = function() {
   if (score.textContent > window.localStorage.height_score)
     window.localStorage.height_score = score.textContent;
-  if (!window.locationbar.height_score ) {
-    window.localStorage.height_score = score.textContent;
 
-  }
   window.location.reload();
 }
 
