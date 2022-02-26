@@ -45,6 +45,10 @@ start_btn.onclick = function() {
 reset_btn.onclick = function() {
   if (score.textContent > window.localStorage.height_score)
     window.localStorage.height_score = score.textContent;
+  if (!window.locationbar.height_score ) {
+    window.localStorage.height_score = score.textContent;
+
+  }
   window.location.reload();
 }
 
