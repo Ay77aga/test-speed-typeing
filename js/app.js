@@ -7,14 +7,16 @@ let menu = document.querySelector('.menu'),
   active_word = document.querySelector('.area_data h2'),
   words_area = document.querySelector('.words'),
   score = document.querySelector('.score>span'),
-  words = ['html', 'css', 'js','cpp','programing','java','kotlin',
-  'go','fkjs','code','wors','hello','world','brain','win','loser'],
+  words = ['html', 'css', 'js', 'cpp', 'java', 'kotlin',
+  'go', 'fkjs', 'code', 'wors', 'hello', 'world', 'brain', 'win', 'loser'],
   start_btn = document.querySelector('.btn.start'),
   reset_btn = document.querySelector('.btn.reset'),
   pop = document.querySelector('.pop');
 // ###### ###### ###### ###### ###### ###### ######
 
-
+if (window.localStorage.height_score) {
+  document.querySelector('.height_score span').textContent = window.localStorage.height_score;
+}
 level.setAttribute('data-time', 4);
 menu.addEventListener('click', function() {
   this.classList.toggle('active');
@@ -41,8 +43,9 @@ start_btn.onclick = function() {
 }
 
 reset_btn.onclick = function() {
-  window.location.reload()
-
+  if (score.textContent > window.localStorage.height_score)
+    window.localStorage.height_score = score.textContent;
+  window.location.reload();
 }
 
 
