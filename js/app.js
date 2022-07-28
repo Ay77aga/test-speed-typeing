@@ -1,106 +1,107 @@
-// drop menu
-let menu = document.querySelector('.menu'),
-  lis = Array.from(document.querySelectorAll('.menu ul li')),
-  level = document.querySelector('.level'),
-  timer = document.querySelector('.time'),
-  input = document.querySelector('input'),
-  active_word = document.querySelector('.area_data h2'),
-  words_area = document.querySelector('.words'),
-  score = document.querySelector('.score>span'),
-  words = ['html', 'css', 'js', 'cpp', 'java', 'kotlin',
-  'go', 'fkjs', 'code', 'wors', 'hello', 'world', 'brain', 'win', 'loser'],
-  start_btn = document.querySelector('.btn.start'),
-  reset_btn = document.querySelector('.btn.reset'),
-  pop = document.querySelector('.pop');
-// ###### ###### ###### ###### ###### ###### ######
+import words from './words.js';
 
-if (window.localStorage.height_score) {
-  document.querySelector('.height_score span').textContent = window.localStorage.height_score;
-}else{
-    window.localStorage.height_score = score.textContent;
+const query = (element) => document.querySelector(element);
+
+let words_area = query('.words');
+let current_word = query('.area_data h2');
+let input = query('input');
+let count_dowen = query('.time');
+let current_score = query('.current_score span');
+let height_score = query('.height_score span');
+let select = query('select');
+let start_btn = query('.start');
+
+let level = 0;
+let count_score = 0;
+
+
+if (window.localStorage.Height_score) {
+  height_score.textContent = window.localStorage.Height_score;
 }
-level.setAttribute('data-time', 4);
-menu.addEventListener('click', function() {
-  this.classList.toggle('active');
-  lis.forEach(li => {
-    li.addEventListener('click', function() {
-      lis.forEach(_ => _.classList.remove('active'));
-      level.textContent = this.textContent;
-      level.setAttribute('data-time', this.dataset.time)
-      this.classList.add('active');
-    });
-  });
-});
-
-render_words(words);
-// ###### ###### ###### ###### ###### ###### ######
-get_word(words);
-let game_area = document.querySelector('.area');
 
 start_btn.onclick = function() {
-  this.style.display = 'none';
-  game_area.classList.add('active');
-  start();
-  timer.textContent = level.dataset.time;
+  level = select.value;
+  this.remove();
+  query('section').classList.add('active');
+  start(words);
+};
+
+query('.again').onclick = () => window.location.reload();
+
+
+function render_words(arr) {
+  words_area.innerHTML = '';
+  get_word(arr)
+  arr.forEach(word => {
+    let span = document.createElement('span');
+    span.textContent = word;
+    words_area.appendChild(span)
+  });
 }
 
-reset_btn.onclick = function() {
-  if (score.textContent > window.localStorage.height_score)
-    window.localStorage.height_score = score.textContent;
-
-  window.location.reload();
-}
-
-
-function check(c) {
-  if (input.value == active_word.textContent) {
-    score.textContent++;
-    timer.textContent = level.dataset.time;
-    get_word(words)
-    input.value = '';
-  }
-  else {
-    reset_btn.style.display = 'block';
-    pop.style.display = 'block';
-    pop.textContent = 'Loser';
-    clearInterval(c);
-  }
-}
-
-// get word
 function get_word(arr) {
-  let r = Math.floor(Math.random() * arr.length);
-  let index = arr.indexOf(arr[r]);
-  let word = arr[r];
-  index > -1 ? arr.splice(index, 1) : '';
-  render_words(arr);
-  active_word.textContent = word;
+  let rand = Math.floor(Math.random() * arr.length);
+  let index = arr.indexOf(arr[rand]);
+  let word = arr.splice(index, 1);
+
+  current_word.textContent = word.toString();
+  return word.toString();
 }
 
-function render_words(words) {
-  words_area.textContent = '';
-  for (let index = 0; index < words.length; index++) {
-    let word = document.createElement('span');
-    words_area.appendChild(word);
-    word.textContent = words[index];
+function start(arr) {
+  input.focus();
+  render_words(arr);
+  let time = setInterval(() => {
+    level--;
+    count_dowen.textContent = level;
+    if (level === 0) {
+      check(time);
+    }
+  }, 1000)
+}
+
+
+function check(t) {
+  if (input.value == current_word.textContent) {
+    update_score();
+    win(t);
+    input.value = '';
+    level = 4;
+    render_words(words)
+  } else {
+    lose();
+    clearInterval(t)
+  }
+
+}
+
+function win(t) {
+  if (words.length === 0) {
+    console.log('win');
+    msg('Winner');
+    clearInterval(t);
   }
 }
-//  start game
-function start() {
-  input.focus();
-  pop.style.display = 'none';
-  let count = setInterval(() => {
-    timer.textContent--;
-    if (timer.textContent == 0) {
-      check(count);
-    }
-    if (active_word.textContent == '') {
-      timer.textContent = 0;
-      game_area.classList.remove('active');
-      clearInterval(count);
-      reset_btn.style.display = 'block';
-      pop.style.display = 'block';
-      pop.textContent = 'Winner';
-    }
-  }, 1000);
+
+function lose() {
+  console.log('lose')
+  msg('Loser')
+  input.setAttribute('disabled', '');
+}
+
+function update_score() {
+  count_score++
+  console.log(count_score);
+  current_score.textContent = count_score;
+  if (count_score > height_score.textContent) {
+    height_score.textContent = count_score;
+    window.localStorage.Height_score = count_score;
+  }
+
+}
+
+function msg(str) {
+  query('.stats').classList.add('active');
+  query('.stats .s').textContent = count_score;
+  query('.stats .p').textContent = str;
 }

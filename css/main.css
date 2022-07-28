@@ -36,7 +36,7 @@ html {
 }
 
 :root {
-  --main: #ECB365;
+  --main: #fff;
 }
 
 body {
@@ -142,9 +142,18 @@ header h1 i {
   position: relative;
 }
 
-.scors {
-  text-align: center;
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px 0 10px auto;
   font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.score span {
+  color: coral;
 }
 
 .area .area_data {
@@ -164,7 +173,7 @@ header h1 i {
   width: 60px;
   margin: 15px;
   text-align: center;
-  font-size: 40px;
+  font-size: 30px;
   border-radius: 50%;
   color: var(--main);
   background: rgba(0, 0, 0, .8);
@@ -175,10 +184,6 @@ header h1 i {
   margin: auto;
 }
 
-input:focus {
-  outline: none;
-  box-shadow: 0 0 8px 2px var(--main);
-}
 
 .form input {
   width: 100%;
@@ -186,11 +191,17 @@ input:focus {
   background: rgba(0, 0, 0, .5);
   color: var(--main);
   text-align: center;
-  font-size: 2em;
+  font-size: 20px;
   font-weight: bold;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   border: 2px solid var(--main);
 }
+
+input:focus {
+  outline: none;
+  border-color: lime;
+}
+
 
 .words {
   border: 2px solid var(--main);
@@ -207,7 +218,7 @@ input:focus {
 .words span {
   background: rgba(0, 0, 0, .5);
   border: 1px solid var(--main);
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   margin: 5px;
   padding: 7px 10px;
@@ -216,38 +227,80 @@ input:focus {
 }
 
 .btn {
-  padding: 10px;
   width: fit-content;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%);
   color: var(--main);
   background: #000;
   border: 1px solid var(--main);
   border-radius: 10px;
-  font-size: 40px;
   font-weight: bold;
   letter-spacing: 3px;
+}
+
+.start {
   z-index: 21;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 10px;
+  font-size: 40px;
+}
+
+.btn:focus,
+select:focus {
+  outline: none;
+}
+
+select {
+  background: #0B5ED7E6;
+  color: #fff;
+  border-radius: 10px;
+  padding: 5px;
+  border: 2px solid #fff;
 }
 
 .btn.reset {
   display: none;
 }
 
-.pop {
-  display: none;
-  position: fixed;
-  text-align: center;
-  width: 300px;
-  height: 300px;
-  background: #000;
-  color: var(--main);
-  font-size: 45px;
-  border: 2px solid var(--main);
-  left: 50%;
-  top: 50%;
-  z-index: 20;
-  transform: translate(-50%, -50%);
+:disabled {
+  opacity: .5;
+}
+
+.stats {
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, .7);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 35px;
+  z-index: 999;
+  transition: 1s;
+  font-weight: bold;
+}
+
+.stats .s {
+  color: coral;
+}
+
+.stats p {
+  margin: 20px auto;
+}
+
+.again {
+  padding: 8px;
+  background: #0B5ED7;
+
+}
+
+.stats.active {
+  height: 100%;
 }

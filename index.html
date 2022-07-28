@@ -16,36 +16,35 @@
     <h1>Writing Speed Test <i class="fa-solid fa-keyboard"></i></h1>
   </header>
   <div class="container">
-    <div class="data">
-      <div class="menu">
-        <div><span class="level">Easy</span> <i class="fa-solid fa-caret-down"></i></div>
-        <ul class="levels">
-          <li class="active" data-time="5">Easy</li>
-          <li data-time="4">Middle</li>
-          <li data-time="3">Hard</li>
-        </ul>
-      </div>
-      <div class="scors">
-      <p class="score">Score: <span>0</span></p>
-      <p class="height_score">Height Score: <span>0</span></p>
-      </div>
+    <div class="score">
+      <select id="levels">
+        <option value="5">Easy</option>
+        <option value="4">Middle</option>
+        <option value="3">Hard</option>
+      </select>
+      <p class="current_score">Score : <span></span></p>
+      <p class="height_score">Height score : <span></span></p>
     </div>
-    <div class="pop"></div>
     <button class="btn start">Start</button>
-    <button class="btn reset">Re Start</button>
     <section class="area">
+      <div class="stats">
+        <p class="s"></p>
+        <p class="p"></p>
+        <button class="btn again">Again</button>
+
+      </div>
       <div class="area_data">
         <h2></h2>
-        <p class="time">0</p>
+        <p class="time"></p>
       </div>
       <div class="form">
         <input type="text" placeholder="Enter This Word: ">
       </div>
-      <div class="words">
-      </div>
+      <div class="words"></div>
     </section>
   </div>
-  <script src="js/app.js"></script>
+  <script src="js/app.js" type="module"></script>
+  <script src="js/words.js" type="module"></script>
 </body>
 
 </html>
