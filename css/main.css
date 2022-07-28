@@ -207,8 +207,8 @@ input:focus {
   border: 2px solid var(--main);
   text-align: center;
   padding: 5px;
-  width: 320px;
-  margin: 15px auto;
+  width: 95%;
+  margin: 20px auto;
   border-radius: 10px;
   display: flex;
   flex-flow: row wrap;
