@@ -50,6 +50,11 @@ function get_word(arr) {
 
 function start(arr) {
   input.focus();
+  let hard = [];
+  if (select.value == 3) {
+    arr = arr.map(el => el.replace(el.charAt(0), el.charAt(0).toUpperCase()));
+    // console.log(arr)
+  }
   render_words(arr);
   let time = setInterval(() => {
     level--;
@@ -59,7 +64,6 @@ function start(arr) {
     }
   }, 1000)
 }
-
 
 function check(t) {
   if (input.value == current_word.textContent) {
@@ -105,3 +109,4 @@ function msg(str) {
   query('.stats .s').textContent = count_score;
   query('.stats .p').textContent = str;
 }
+
